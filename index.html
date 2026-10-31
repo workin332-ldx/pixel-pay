@@ -287,7 +287,7 @@
     
 document.getElementById('orderForm').addEventListener('submit', async event => {
   event.preventDefault();
-
+const form = event.currentTarget;
   const login = document.getElementById('steamLogin').value.trim();
   const amount = Number(amountInput.value);
 
@@ -331,7 +331,7 @@ if (!response.ok || !result.success) {
 
     formMessage.textContent =
       `Заявка ${result.orderId} отправлена! Ожидай подтверждения в Telegram.`;
-    event.currentTarget.reset();
+    form.reset();
     amountInput.value = 1000;
     updateTotal();
 

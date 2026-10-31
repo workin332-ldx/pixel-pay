@@ -314,11 +314,20 @@ document.getElementById('orderForm').addEventListener('submit', async event => {
       }
     );
 
-    const result = await response.json();
+    const responseText = await response.text();
+let result = {};
 
-    if (!response.ok) {
-      throw new Error(result.error || 'Не удалось отправить заявку');
-    }
+try {
+  result = JSON.parse(responseText);
+} catch {
+  throw new Error('Сервер вернул некорректный ответ');
+}
+
+if (!response.ok || !result.success) {
+  throw new Error(result.error || 'Не удалось отправить заявку');
+}
+
+    
 
     formMessage.textContent =
       `Заявка ${result.orderId} отправлена! Ожидай подтверждения в Telegram.`;
